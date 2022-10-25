@@ -1,0 +1,75 @@
+<?xml version="1.0" standalone="yes"?>
+<dsPortfolio>
+  <xs:schema id="dsPortfolio" xmlns="" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:app1="http://tempuri.org/NeatxsDataTables.xsd">
+    <xs:import namespace="http://tempuri.org/NeatxsDataTables.xsd" schemaLocation="NISM26_Portfolio_app1.xsd" />
+    <xs:element name="dsPortfolio" msdata:IsDataSet="true" msdata:UseCurrentLocale="true">
+      <xs:complexType>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element name="UserPortfolio">
+            <xs:complexType>
+              <xs:sequence>
+                <xs:element name="UserId" type="xs:long" minOccurs="0" msdata:Ordinal="22" />
+                <xs:element name="ExchangeToken" type="xs:string" minOccurs="0" msdata:Ordinal="23" />
+                <xs:element name="tmpColExchSegName" msdata:ReadOnly="true" msdata:Expression="IIF(ExchangeId=1 and SegmentId&lt;20000,'NSECM',IIF(ExchangeId=1 and SegmentId&gt;20000,'NSEFO',IIF(ExchangeId=2,'BSECM',IIF(ExchangeId=3,'NCDEXFO',IIF(ExchangeId=5,'NSECD','MCXFO')))))" type="xs:string" minOccurs="0" msdata:Ordinal="24" />
+                <xs:element name="BBPrice" type="xs:decimal" minOccurs="0" msdata:Ordinal="25" />
+                <xs:element name="BSPrice" type="xs:decimal" minOccurs="0" msdata:Ordinal="26" />
+                <xs:element name="LTPrice" type="xs:decimal" minOccurs="0" msdata:Ordinal="27" />
+                <xs:element name="SpotPrice" type="xs:decimal" minOccurs="0" msdata:Ordinal="28" />
+                <xs:element name="PriceNum" type="xs:decimal" minOccurs="0" msdata:Ordinal="29" />
+                <xs:element name="PriceDen" type="xs:decimal" minOccurs="0" msdata:Ordinal="30" />
+                <xs:element name="GenNum" type="xs:decimal" minOccurs="0" msdata:Ordinal="31" />
+                <xs:element name="GenDen" type="xs:decimal" minOccurs="0" msdata:Ordinal="32" />
+                <xs:element name="LotSize" type="xs:int" minOccurs="0" msdata:Ordinal="33" />
+                <xs:element name="NetQty" msdata:ReadOnly="true" msdata:Expression="IIF(PurchaseQty &gt;SellingQty ,(PurchaseQty -SellingQty),(SellingQty-PurchaseQty ))" type="xs:int" minOccurs="0" msdata:Ordinal="34" />
+                <xs:element name="AvgPrice" msdata:ReadOnly="true" msdata:Expression="(IIF(PurchaseQty = SellingQty, 0.00, ((PurchaseQty * PurchasePrice)-(SellingQty * SellingPrice)) +  IIF(PurchaseQty&gt;SellingQty,((SellingQty)*(SellingPrice-PurchasePrice)),((PurchaseQty)*(SellingPrice-PurchasePrice)))) /(IIF(PurchaseQty=SellingQty, 1, (PurchaseQty-SellingQty))))" type="xs:decimal" minOccurs="0" msdata:Ordinal="35" />
+                <xs:element name="BuySell" msdata:ReadOnly="true" msdata:Expression="IIF((PurchaseQty -SellingQty)&gt;0,'BUY',IIF((PurchaseQty -SellingQty)=0,'SQUARED OFF','SELL'))" type="xs:string" minOccurs="0" msdata:Ordinal="36" />
+                <xs:element name="FExpiryDate" type="xs:string" minOccurs="0" msdata:Ordinal="37" />
+                <xs:element name="FSTrikePrice" type="xs:string" minOccurs="0" msdata:Ordinal="38" />
+                <xs:element name="FInstrumentName" type="xs:string" minOccurs="0" msdata:Ordinal="39" />
+                <xs:element name="Instrument" msdata:ReadOnly="true" msdata:Expression="FInstrumentName +' ' +Symbol+' ' +BSEScripCode+' '+Series+' '+Segment+' ' +FExpiryDate+' '+FStrikePrice+' '+OptionType" type="xs:string" minOccurs="0" msdata:Ordinal="40" />
+                <xs:element name="RPL" msdata:ReadOnly="true" msdata:Expression="IIF(PurchaseQty&gt;SellingQty,((SellingQty)*(SellingPrice-PurchasePrice)),((PurchaseQty)*(SellingPrice-PurchasePrice)))" type="xs:decimal" minOccurs="0" msdata:Ordinal="41" />
+                <xs:element name="MTM" msdata:ReadOnly="true" msdata:Expression="IIF(LTPrice=0.00,0.00,(((PurchasePrice*PurchaseQty)*(PriceNum*GenNum*LotSize)/(PriceDen*GenDen))-((SellingPrice*SellingQty)*(PriceNum*GenNum*LotSize)/(PriceDen*GenDen)) + IIF(PurchaseQty&gt;SellingQty,((SellingQty)*(SellingPrice-PurchasePrice)),((PurchaseQty)*(SellingPrice-PurchasePrice))) -(((PurchaseQty-SellingQty)*LTPrice)*(PriceNum*GenNum*LotSize)/(PriceDen*GenDen))))" type="xs:decimal" minOccurs="0" msdata:Ordinal="42" />
+                <xs:element name="ExchangeTradeRefNo" type="xs:string" minOccurs="0" msdata:Ordinal="43" />
+              </xs:sequence>
+              <xs:attribute ref="app1:PortfolioId" use="required" />
+              <xs:attribute ref="app1:PortfolioName" use="required" />
+              <xs:attribute ref="app1:Description" />
+              <xs:attribute ref="app1:ClientId" />
+              <xs:attribute ref="app1:ExchangeId" use="required" />
+              <xs:attribute ref="app1:InstrumentName" />
+              <xs:attribute ref="app1:ExpiryDate" />
+              <xs:attribute ref="app1:StrikePrice" />
+              <xs:attribute ref="app1:OptionType" />
+              <xs:attribute ref="app1:Market" />
+              <xs:attribute ref="app1:Symbol" />
+              <xs:attribute ref="app1:Series" />
+              <xs:attribute ref="app1:PurchaseQty" />
+              <xs:attribute ref="app1:PurchasePrice" />
+              <xs:attribute ref="app1:SellingQty" />
+              <xs:attribute ref="app1:SellingPrice" />
+              <xs:attribute ref="app1:InstModDateTime" />
+              <xs:attribute ref="app1:PortfolioModDateTime" />
+              <xs:attribute ref="app1:InstrumentId" use="required" />
+              <xs:attribute ref="app1:SegmentId" use="required" />
+              <xs:attribute ref="app1:Segment" />
+              <xs:attribute ref="app1:BSEScripCode" />
+            </xs:complexType>
+          </xs:element>
+        </xs:choice>
+      </xs:complexType>
+      <xs:unique name="UserPdKey" msdata:PrimaryKey="true">
+        <xs:selector xpath=".//UserPortfolio" />
+        <xs:field xpath="@app1:PortfolioId" />
+        <xs:field xpath="@app1:PortfolioName" />
+        <xs:field xpath="@app1:ExchangeId" />
+        <xs:field xpath="@app1:InstrumentId" />
+        <xs:field xpath="@app1:SegmentId" />
+      </xs:unique>
+    </xs:element>
+  </xs:schema>
+  <UserPortfolio d2p1:PortfolioId="1" d2p1:PortfolioName="PRO" d2p1:ClientId="1" d2p1:ExchangeId="0" d2p1:InstrumentId="0" d2p1:SegmentId="0" xmlns:d2p1="http://tempuri.org/NeatxsDataTables.xsd">
+    <UserId>675</UserId>
+    <tmpColExchSegName>MCXFO</tmpColExchSegName>
+    <BuySell>SELL</BuySell>
+  </UserPortfolio>
+</dsPortfolio>
